@@ -1,0 +1,473 @@
+ScreenManagement:
+    # transition: FadeTransition()
+    LoginScreen:
+    MainScreen:
+    # MergeScreen:
+    SelectFileScreen:
+    ViewDatabaseScreen:
+    PDFScreen:
+    SearchScreen:
+
+
+<LoginScreen>:
+
+    name: 'login'
+    canvas:
+        Color:
+            rgba: .7, .7, .5, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+            source: 'background.png'
+        # Image:
+            # source: 'Draft2.png'
+
+
+
+    #name: 'Login'
+
+    Button:
+        size_hint: .3, .1
+        font_size: 30
+        font_name: 'Georgia'
+        pos: 700, 300
+        background_color: (1.0, 0.0, 0.0, 1.0)
+        on_release: app.root.current = 'main'
+        text: 'Enter Infinite Inventory'
+
+
+<MainScreen>:
+    name: 'main'
+    canvas:
+        Color:
+            rgba: .7, .7, .5, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+            source: 'InfinityBackground.png'
+    Button:
+        background_normal: 'UpdateDatabase.png'
+        background_down: 'convert3.png'
+        size_hint: .4, .2
+        pos: 550, 50
+        on_release: app.root.current = 'select'
+        # text: 'Convert'
+        font_size: 50
+
+    Button:
+        background_normal: 'ViewDatabase.png'
+        size_hint: .4, .2
+        pos: 550, 400
+        on_release: app.root.current = 'view_database'
+
+        # text: 'Merge Files'
+        font_size: 50
+
+    Button:
+        text: "Search Database"
+        font_size: 30
+        size_hint: .4, .2
+        pos: 550, 225
+        on_release: app.root.current = 'searchscreen'
+
+
+<SearchScreen>:
+    box: box
+    name: 'searchscreen'
+    canvas:
+        Color:
+            rgba: .7, .7, .5, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+            source: 'InfinityBackground.png'
+
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        GridLayout:
+            size_hint: 1, None
+            size_hint_y: None
+            height: 1000
+            cols: 2
+
+            Label:
+                text: "RESULTS:"
+                color: 1,0,1,1
+
+
+    TextInput:
+        id: search
+        hint_text: 'Search'
+        multiline: False
+        font_size: 30
+        size_hint: .3, .1
+        pos: 600, 250
+
+    BoxLayout:
+        id: box
+        size_hint_y: 0.20
+        orientation: "vertical"
+
+
+    Button:
+        text: "Search"
+        size_hint: .3, .1
+        pos:600, 150
+        on_press: root.input(search.text)
+
+
+    Button:
+        size_hint: .2, .1
+        pos: 0,0
+        on_release: app.root.current = 'main'
+        text: 'Return to Main Menu'
+        font_size: 20
+
+
+<SelectFileScreen>:
+    name: 'select'
+    canvas:
+        Color:
+            rgba: .7, .7, .5, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+            source: 'Draft2.png'
+    Button:
+        size_hint: .2, .1
+        pos: 0,0
+        on_release: app.root.current = 'main'
+        text: 'Return to Main Menu'
+        font_size: 20
+    Button:
+        size_hint: root.center_x / 2000, root.center_y / 1000
+        pos: 350, 400
+        on_release: app.root.current = 'pdf'
+        text: 'Select File'
+        font_size: 50
+
+<ViewDatabaseScreen>:
+    name: 'view_database'
+    # long_text: long_text
+
+    canvas:
+        Color:
+            rgba: 0, 0, .1, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        GridLayout:
+            size_hint: 1, None
+            size_hint_y: None
+            height: 25
+            cols: 17
+
+            Label:
+                text: "Added"
+                color: 1,0,1,1
+            Label:
+                text: "Updated"
+                color: 1,0,1,1
+            Label:
+                text: "IP"
+                color: 1,0,1,1
+            Label:
+                text: "Hostname"
+                color: 1,0,1,1
+            Label:
+                text: "Maintenance"
+                color: 1,0,1,1
+            Label:
+                text: "Project"
+                color: 1,0,1,1
+            Label:
+                text: "Main. Renewal"
+                color: 1,0,1,1
+            Label:
+                text: "ECN"
+                color: 1,0,1,1
+            Label:
+                text: "Other"
+                color: 1,0,1,1
+            Label:
+                text: "GSMO"
+                color: 1,0,1,1
+            Label:
+                text: "Serial Num"
+                color: 1,0,1,1
+            Label:
+                text: "Model"
+                color: 1,0,1,1
+            Label:
+                text: "Manufacturer"
+                color: 1,0,1,1
+            Label:
+                text: "Location"
+                color: 1,0,1,1
+            Label:
+                text: "Campus"
+                color: 1,0,1,1
+            Label
+                text: "Building"
+                color: 1,0,1,1
+            Label
+                text: "Description"
+                color: 1,0,1,1
+
+        BoxLayout:
+
+            RecycleView:
+                data: [{'text':"{}".format(date_added)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(last_updated)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num , model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(ip)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(hostname)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(maintenance)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other , GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(project)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model,manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(renew_mait)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(ECN)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(other)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(GSMO)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(serial_num)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(model)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(manufacturer)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(location)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(campus)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(building)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+            RecycleView:
+                data: [{'text':"{}".format(desc)} for date_added, last_updated, ip, hostname, maintenance, project, renew_mait, ECN, other, GSMO, serial_num, model, manufacturer, location, campus, building, desc in root.data_items]
+                viewclass: "Label"
+                RecycleBoxLayout:
+                    default_size: None, dp(56)
+                    orientation: "vertical"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+
+    Button:
+        size_hint: .2, .1
+        pos: 0,0
+        text: 'Return to Main Menu'
+        on_release: app.root.current = 'main'
+        font_size: 20
+
+    Button:
+
+        size_hint: .2, .1
+        pos: 1550, 0
+        #on_press: root.viewDatabase()
+        on_release: root.display()
+        text: "View Database"
+
+    Button:
+        size_hint: .2, .1
+        pos: 800,0
+        text: 'Clear Database'
+        on_release: root.clearDatabase()
+        font_size: 20
+
+
+
+<PDFScreen>:
+    name: 'pdf'
+    file_chooser: file_chooser
+    canvas:
+        Color:
+            rgba: .7, .7, .5, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+            source: 'InfinityBackground.png'
+    Button:
+        size_hint: .2, .1
+        pos: 0,0
+        text: 'Return to Main Menu'
+        on_release: app.root.current = 'main'
+        font_size: 20
+    FileChooserListView:
+        pos: 0,50
+        size_hint: .33, .86
+        id: file_chooser
+        on_selection:  root.selected(file_chooser.selection)
+        font_size: 40
+    Button:
+        pos: 800, 500
+        size_hint: .4, .2
+        text: 'Update Database'
+        on_press: root.writepdf(file_chooser.selection, file_chooser.path)
+<DocScreen>:
+    name: 'doc'
+    file_chooser: file_chooser
+    canvas:
+        Color:
+            rgba: .7, .7, .5, 1
+        Rectangle:
+            size: root.center_x * 2, root.center_y * 2
+            pos: 0, 0
+            source: 'Draft2.png'
+    Button:
+        size_hint: .2, .1
+        pos: 0,0
+        text: 'Return to Main Menu'
+        on_release: app.root.current = 'main'
+        font_size: 20
+    FileChooserListView:
+        pos: 0,50
+        size_hint: .33, .86
+        id: file_chooser
+        on_selection:  root.selected(file_chooser.selection)
+        font_size: 40
+    Button:
+        pos: 900, 400
+        size_hint: .33, .4
+        text: 'write to Doc'
+        on_press: root.writeword()
